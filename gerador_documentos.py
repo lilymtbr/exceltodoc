@@ -40,8 +40,8 @@ def generate_word():
         sheet_total = workbook['Total']
 
         # Obter os valores das células J3 e K3
-        temperatura_interna = sheet_descr['J3'].value
-        temperatura_externa = sheet_descr['K3'].value
+        temperatura_interna = sheet_descr['K3'].value
+        temperatura_externa = sheet_descr['J3'].value
 
         # Obter os valores das células A40, A39, A38, A37, A36, A35 na aba Capa
         rev1 = sheet_capa['A40'].value
@@ -103,24 +103,24 @@ def generate_word():
         rev = sheet_capa['I56'].value
 
         # Obter os valores das células A3 a A20
-        ref1 = sheet_capa['A3'].value
-        ref2 = sheet_capa['A4'].value
-        ref3 = sheet_capa['A5'].value
-        ref4 = sheet_capa['A6'].value
-        ref5 = sheet_capa['A7'].value
-        ref6 = sheet_capa['A8'].value
-        ref7 = sheet_capa['A9'].value
-        ref8 = sheet_capa['A10'].value
-        ref9 = sheet_capa['A11'].value
-        ref10 = sheet_capa['A12'].value
-        ref11 = sheet_capa['A13'].value
-        ref12 = sheet_capa['A14'].value
-        ref13 = sheet_capa['A15'].value
-        ref14 = sheet_capa['A16'].value
-        ref15 = sheet_capa['A17'].value
-        ref16 = sheet_capa['A18'].value
-        ref17 = sheet_capa['A19'].value
-        ref18 = sheet_capa['A20'].value
+        um_ref = sheet_capa['A3'].value
+        dois_ref = sheet_capa['A4'].value
+        tres_ref = sheet_capa['A5'].value
+        quatro_ref = sheet_capa['A6'].value
+        cinco_ref = sheet_capa['A7'].value
+        seis_ref = sheet_capa['A8'].value
+        sete_ref = sheet_capa['A9'].value
+        oito_ref = sheet_capa['A10'].value
+        nove_ref = sheet_capa['A11'].value
+        dez_ref = sheet_capa['A12'].value
+        onze_ref = sheet_capa['A13'].value
+        doze_ref = sheet_capa['A14'].value
+        treze_ref = sheet_capa['A15'].value
+        catorze_ref = sheet_capa['A16'].value
+        quinze_ref = sheet_capa['A17'].value
+        dezesseis_ref = sheet_capa['A18'].value
+        dezessete_ref = sheet_capa['A19'].value
+        dezoito_ref = sheet_capa['A20'].value
 
         # Obter os valores das células C15 and C16
         carga_pnl_elet = sheet_carga_teq['C15'].value
@@ -173,12 +173,12 @@ def generate_word():
 
         # Lista de células correspondentes na aba "Carga térmica equip."
         equip_data_values = [
-            'F17', 'G17', 'H17', 'I17', 'J17', 'K17', 'L17', 'M17', 'N17',
-            'F18', 'G18', 'H18', 'I18', 'J18', 'K18', 'L18', 'M18', 'N18',
-            'F19', 'G19', 'H19', 'I19', 'J19', 'K19', 'L19', 'M19', 'N19',
-            'F20', 'G20', 'H20', 'I20', 'J20', 'K20', 'L20', 'M20', 'N20',
-            'F21', 'G21', 'H21', 'I21', 'J21', 'K21', 'L21', 'M21', 'N21',
-            'F22', 'G22', 'H22', 'I22', 'J22', 'K22', 'L22', 'M22', 'N22',
+            'F17', 'G17', 'H17', 'I17', 'J17', 'K17', 'L17', 'M17', 'N17', 'O17',
+            'F18', 'G18', 'H18', 'I18', 'J18', 'K18', 'L18', 'M18', 'N18', 'O18',
+            'F19', 'G19', 'H19', 'I19', 'J19', 'K19', 'L19', 'M19', 'N19', 'O19',
+            'F20', 'G20', 'H20', 'I20', 'J20', 'K20', 'L20', 'M20', 'N20', 'O20',
+            'F21', 'G21', 'H21', 'I21', 'J21', 'K21', 'L21', 'M21', 'N21', 'O21',
+            'F22', 'G22', 'H22', 'I22', 'J22', 'K22', 'L22', 'M22', 'N22', 'O22'
         ]
 
         equip_data_total_w_values = [sheet_carga_teq[f'O{row}'].value for row in range(17, 23)]  # B15 a B24 para equipamentos
@@ -239,6 +239,9 @@ def generate_word():
         apar_values = ['B27', 'C27', 'D27', 'E27', 'F27', 'G27']
         apar_qtes = ['B28', 'C28', 'D28', 'E28', 'F28', 'G28']
 
+        dt_ext = sheet_descr['L3'].value
+        coef_u_par_ext = format_decimal(sheet_descr['J8'].value)
+
         # Função para formatar datas
         def format_date(date):
             if isinstance(date, datetime):
@@ -293,24 +296,24 @@ def generate_word():
         subestacao = str(subestacao) if subestacao is not None else ""
         num_cliente = str(num_cliente) if num_cliente is not None else ""
         rev = str(rev) if rev is not None else ""
-        ref1 = str(ref1) if ref1 is not None else ""
-        ref2 = str(ref2) if ref2 is not None else ""
-        ref3 = str(ref3) if ref3 is not None else ""
-        ref4 = str(ref4) if ref4 is not None else ""
-        ref5 = str(ref5) if ref5 is not None else ""
-        ref6 = str(ref6) if ref6 is not None else ""
-        ref7 = str(ref7) if ref7 is not None else ""
-        ref8 = str(ref8) if ref8 is not None else ""
-        ref9 = str(ref9) if ref9 is not None else ""
-        ref10 = str(ref10) if ref10 is not None else ""
-        ref11 = str(ref11) if ref11 is not None else ""
-        ref12 = str(ref12) if ref12 is not None else ""
-        ref13 = str(ref13) if ref13 is not None else ""
-        ref14 = str(ref14) if ref14 is not None else ""
-        ref15 = str(ref15) if ref15 is not None else ""
-        ref16 = str(ref16) if ref16 is not None else ""
-        ref17 = str(ref17) if ref17 is not None else ""
-        ref18 = str(ref18) if ref18 is not None else ""
+        um_ref = str(um_ref) if um_ref is not None else ""
+        dois_ref = str(dois_ref) if dois_ref is not None else ""
+        tres_ref = str(tres_ref) if tres_ref is not None else ""
+        quatro_ref = str(quatro_ref) if quatro_ref is not None else ""
+        cinco_ref = str(cinco_ref) if cinco_ref is not None else ""
+        seis_ref = str(seis_ref) if seis_ref is not None else ""
+        sete_ref = str(sete_ref) if sete_ref is not None else ""
+        oito_ref = str(oito_ref) if oito_ref is not None else ""
+        nove_ref = str(nove_ref) if nove_ref is not None else ""
+        dez_ref = str(dez_ref) if dez_ref is not None else ""
+        onze_ref = str(onze_ref) if onze_ref is not None else ""
+        doze_ref = str(doze_ref) if doze_ref is not None else ""
+        treze_ref = str(treze_ref) if treze_ref is not None else ""
+        catorze_ref = str(catorze_ref) if catorze_ref is not None else ""
+        quinze_ref = str(quinze_ref) if quinze_ref is not None else ""
+        dezesseis_ref = str(dezesseis_ref) if dezesseis_ref is not None else ""
+        dezessete_ref = str(dezessete_ref) if dezessete_ref is not None else ""
+        dezoito_ref = str(dezoito_ref) if dezoito_ref is not None else ""
         carga_pnl_elet = str(carga_pnl_elet) if carga_pnl_elet is not None else ""
         carga_quadro_elet = str(carga_quadro_elet) if carga_quadro_elet is not None else ""
         capac_bat_125vcc = str(capac_bat_125vcc) if capac_bat_125vcc is not None else ""
@@ -365,6 +368,9 @@ def generate_word():
         final_data_values = [format_decimal(sheet_total[cell].value) if sheet_total[cell].value is not None else "" for cell in final_data_values]
         apar_values = [str(sheet_total[cell].value) if sheet_total[cell].value is not None else "" for cell in apar_values]
         apar_qtes = [str(sheet_total[cell].value) if sheet_total[cell].value is not None else "" for cell in apar_qtes]
+        dt_ext = str(dt_ext) if dt_ext is not None else ""
+        coef_u_par_ext = str(coef_u_par_ext) if coef_u_par_ext is not None else ""
+
 
         # Carregar o documento Word
         document = Document(word_template_path)
@@ -441,24 +447,24 @@ def generate_word():
         replace_text_in_document(document, '_NumCliente', num_cliente)
         replace_text_in_document(document, '_Rev', rev)
         replace_text_in_document(document, '_Título', subestacao)
-        replace_text_in_document(document, '1_REF', ref1, 12)
-        replace_text_in_document(document, '_REF2', ref2, 12)
-        replace_text_in_document(document, '_REF3', ref3, 12)
-        replace_text_in_document(document, '_REF4', ref4, 12)
-        replace_text_in_document(document, '_REF5', ref5, 12)
-        replace_text_in_document(document, '_REF6', ref6, 12)
-        replace_text_in_document(document, '_REF7', ref7, 12)
-        replace_text_in_document(document, '_REF8', ref8, 12)
-        replace_text_in_document(document, '_REF9', ref9, 12)
-        replace_text_in_document(document, '_REF10', ref10, 12)
-        replace_text_in_document(document, '_REF11', ref11, 12)
-        replace_text_in_document(document, '_REF12', ref12, 12)
-        replace_text_in_document(document, '_REF13', ref13, 12)
-        replace_text_in_document(document, '_REF14', ref14, 12)
-        replace_text_in_document(document, '_REF15', ref15, 12)
-        replace_text_in_document(document, '_REF16', ref16, 12)
-        replace_text_in_document(document, '_REF17', ref17, 12)
-        replace_text_in_document(document, '_REF18', ref18, 12)
+        replace_text_in_document(document, '1_REF', um_ref, 12)
+        replace_text_in_document(document, '_REF2', dois_ref, 12)
+        replace_text_in_document(document, '_REF3', tres_ref, 12)
+        replace_text_in_document(document, '_REF4', quatro_ref, 12)
+        replace_text_in_document(document, '_REF5', cinco_ref, 12)
+        replace_text_in_document(document, '_REF6', seis_ref, 12)
+        replace_text_in_document(document, '_REF7', sete_ref, 12)
+        replace_text_in_document(document, '_REF8', oito_ref, 12)
+        replace_text_in_document(document, '_REF9', nove_ref, 12)
+        replace_text_in_document(document, '_REF10', dez_ref, 12)
+        replace_text_in_document(document, '_REF11', onze_ref, 12)
+        replace_text_in_document(document, '_REF12', doze_ref, 12)
+        replace_text_in_document(document, '_REF13', treze_ref, 12)
+        replace_text_in_document(document, '_REF14', catorze_ref, 12)
+        replace_text_in_document(document, '_REF15', quinze_ref, 12)
+        replace_text_in_document(document, '_REF16', dezesseis_ref, 12)
+        replace_text_in_document(document, '_REF17', dezesseis_ref, 12)
+        replace_text_in_document(document, '_REF18', dezoito_ref, 12)
         replace_text_in_document(document, '_CargaPnlElet', carga_pnl_elet, 12)
         replace_text_in_document(document, '_CargaQuadroElet', carga_quadro_elet, 12)
         replace_text_in_document(document, '_CapacBat125Vcc', capac_bat_125vcc, 12)
@@ -552,6 +558,10 @@ def generate_word():
         for i in range(6):
             replace_text_in_document(document, f'_Aparelho{i+1}', apar_values[i], 11)
             replace_text_in_document(document, f'_Qtde{i+1}', apar_qtes[i], 11)
+
+        # Substituir no documento
+        replace_text_in_document(document, '_DTExt', dt_ext, font_size=12)  # Adapte conforme necessário
+        replace_text_in_document(document, '_CoefUParExt', coef_u_par_ext, font_size=12)  # Adapte conforme necessário
 
         # Salvar o documento Word preenchido
         document.save(output_path)
