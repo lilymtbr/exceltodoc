@@ -1,11 +1,15 @@
 import openpyxl
+import docx
 from docx import Document
 import os
 import tkinter as tk
 from tkinter import filedialog, messagebox
 from datetime import datetime
 from docx.shared import Pt, RGBColor
+from docx.enum.section import WD_SECTION
 
+def add_section_after_paragraph(paragraph):
+    paragraph._element.getparent().addnext(WD_SECTION.NEW_PAGE)
 
 # Função para formatar números com duas casas decimais
 def format_decimal(value):
@@ -94,13 +98,15 @@ def generate_word():
          # Obter os valores das células A49, D49, F49, G49, I49, A45, A51, H49 e I56 na aba Capa
         proj = sheet_capa['A49'].value
         verif = sheet_capa['D49'].value
-        visto = sheet_capa['F49'].value
-        aprov = sheet_capa['G49'].value
-        data = sheet_capa['I49'].value
+        dois_visto = sheet_capa['F49'].value
+        dois_aprov = sheet_capa['G49'].value
+        dois_data = sheet_capa['I49'].value
         empreendimento = sheet_capa['A45'].value
         subestacao = sheet_capa['A51'].value
         num_cliente = sheet_capa['A56'].value
-        rev = sheet_capa['I56'].value
+        dois_rev = sheet_capa['I56'].value
+        dois_feito = sheet_capa['H40'].value
+        no_doc = sheet_capa['A56'].value
 
         # Obter os valores das células A3 a A20
         um_ref = sheet_capa['A3'].value
@@ -181,7 +187,7 @@ def generate_word():
             'F22', 'G22', 'H22', 'I22', 'J22', 'K22', 'L22', 'M22', 'N22', 'O22'
         ]
 
-        equip_data_total_w_values = [sheet_carga_teq[f'O{row}'].value for row in range(17, 23)]  # B15 a B24 para equipamentos
+        equip_data_total_w_values = [sheet_carga_teq[f'P{row}'].value for row in range(17, 23)]  # B15 a B24 para equipamentos
 
         equip_data_total_carga_values = ['F25', 'G25', 'H25', 'I25', 'J25', 'K25']
 
@@ -289,13 +295,14 @@ def generate_word():
         aprov6 = str(aprov6) if aprov6 is not None else ""
         proj = str(proj) if proj is not None else ""
         verif = str(verif) if verif is not None else ""
-        visto = str(visto) if visto is not None else ""
-        aprov = str(aprov) if aprov is not None else ""
-        data = format_date(data) if data is not None else ""
+        dois_visto = str(dois_visto) if dois_visto is not None else ""
+        dois_feito = str(dois_feito) if dois_feito is not None else ""
+        dois_aprov = str(dois_aprov) if dois_aprov is not None else ""
+        dois_data = format_date(dois_data) if dois_data is not None else ""
         empreendimento = str(empreendimento) if empreendimento is not None else ""
         subestacao = str(subestacao) if subestacao is not None else ""
         num_cliente = str(num_cliente) if num_cliente is not None else ""
-        rev = str(rev) if rev is not None else ""
+        dois_rev = str(dois_rev) if dois_rev is not None else ""
         um_ref = str(um_ref) if um_ref is not None else ""
         dois_ref = str(dois_ref) if dois_ref is not None else ""
         tres_ref = str(tres_ref) if tres_ref is not None else ""
@@ -370,12 +377,39 @@ def generate_word():
         apar_qtes = [str(sheet_total[cell].value) if sheet_total[cell].value is not None else "" for cell in apar_qtes]
         dt_ext = str(dt_ext) if dt_ext is not None else ""
         coef_u_par_ext = str(coef_u_par_ext) if coef_u_par_ext is not None else ""
+        no_doc = str(no_doc) if no_doc is not None else ""
+
 
 
         # Carregar o documento Word
         document = Document(word_template_path)
 
         # Função para substituir texto no documento
+        
+        def replace_text_in_header_footer(doc, search_text, replace_text, font_size=None, font_color=None):
+            # Access the header and footer of the first section that contains them (starting from the second page)
+            section = doc.sections[1]
+
+            # Replace text in header
+            header = section.header
+            for paragraph in header.paragraphs:
+                replace_text_in_paragraph(paragraph, search_text, replace_text, font_size, font_color)
+            for table in header.tables:
+                for row in table.rows:
+                    for cell in row.cells:
+                        for paragraph in cell.paragraphs:
+                            replace_text_in_paragraph(paragraph, search_text, replace_text, font_size, font_color)
+
+            # Replace text in footer
+            footer = section.footer
+            for paragraph in footer.paragraphs:
+                replace_text_in_paragraph(paragraph, search_text, replace_text, font_size, font_color)
+            for table in footer.tables:
+                for row in table.rows:
+                    for cell in row.cells:
+                        for paragraph in cell.paragraphs:
+                            replace_text_in_paragraph(paragraph, search_text, replace_text, font_size, font_color)
+
         def replace_text_in_paragraph(paragraph, search_text, replace_text, font_size=None, font_color=None):
             full_text = ''.join(run.text for run in paragraph.runs)
             if search_text in full_text:
@@ -439,13 +473,13 @@ def generate_word():
         replace_text_in_document(document, '_6aAprov', aprov6)
         replace_text_in_document(document, '_Proj', proj)
         replace_text_in_document(document, '_Verif', verif)
-        replace_text_in_document(document, '_Visto', visto)
-        replace_text_in_document(document, '_Aprov', aprov)
-        replace_text_in_document(document, '_Data', data)
+        replace_text_in_document(document, '_2Visto', dois_visto)
+        replace_text_in_document(document, '_2Aprov', dois_aprov)
+        replace_text_in_document(document, '_2Data', dois_data)
         replace_text_in_document(document, '_Empreendimento', empreendimento)
         replace_text_in_document(document, '_Subestação', subestacao)
         replace_text_in_document(document, '_NumCliente', num_cliente)
-        replace_text_in_document(document, '_Rev', rev)
+        replace_text_in_document(document, '_2Rev', dois_rev)
         replace_text_in_document(document, '_Título', subestacao)
         replace_text_in_document(document, '1_REF', um_ref, 12)
         replace_text_in_document(document, '_REF2', dois_ref, 12)
@@ -562,6 +596,15 @@ def generate_word():
         # Substituir no documento
         replace_text_in_document(document, '_DTExt', dt_ext, font_size=12)  # Adapte conforme necessário
         replace_text_in_document(document, '_CoefUParExt', coef_u_par_ext, font_size=12)  # Adapte conforme necessário
+
+        # Substituições nos cabeçalhos e rodapés das demais páginas
+        replace_text_in_header_footer(document, '_2Feito', dois_feito, font_size=10)
+        replace_text_in_header_footer(document, '_2Aprov', dois_aprov, font_size=10)
+        replace_text_in_header_footer(document, '_2Visto', dois_visto, font_size=10)
+        replace_text_in_header_footer(document, '_2Data', dois_data, font_size=10)
+        replace_text_in_header_footer(document, '_NoDoc', no_doc, font_size=10)
+        replace_text_in_header_footer(document, '_2Rev', dois_rev, font_size=10)
+        replace_text_in_header_footer(document, '_Subestação', subestacao, font_size=10)
 
         # Salvar o documento Word preenchido
         document.save(output_path)
